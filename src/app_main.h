@@ -62,7 +62,6 @@ void app_otaProcessMsgHandler(uint8_t evt, uint8_t status);
 bool app_nwkUpdateIndicateHandler(nwkCmd_nwkUpdate_t *pNwkUpdate);
 void app_zclProcessIncomingMsg(zclIncoming_t *pInHdlrMsg);
 void app_nwkStatusIndHandler(zdo_nwk_status_ind_t *pNwkStatusInd);
-
 void factory_reset_start(void *args);
 
 //int32_t getTimeCb(void *arg);
