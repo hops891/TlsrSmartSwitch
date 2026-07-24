@@ -5,7 +5,7 @@
 
 #ifndef MAX_BUTTON_NUM
 #if USE_SWITCH
-#define MAX_BUTTON_NUM 2
+#define MAX_BUTTON_NUM 3
 #else
 #define MAX_BUTTON_NUM 1
 #endif
