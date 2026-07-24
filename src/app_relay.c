@@ -23,15 +23,6 @@ const ext_tab_gpios_t  tab_gpios = {
 		.sw1 = GPIO_SWITCH1,
 		.sw2 = GPIO_SWITCH2,
 		.swire = GPIO_ONEWIRE1,
-#if USE_BL0937
-		.sel = GPIO_SEL,
-		.cf = GPIO_CF,
-		.cf1 = GPIO_CF1,
-#endif
-#if USE_BL0942
-		.rx = GPIO_UART_RX,
-		.tx = GPIO_UART_TX,
-#endif
 	}
 };
 
