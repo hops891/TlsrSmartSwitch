@@ -158,6 +158,9 @@ extern "C" {
 #define GPIO_SWITCH1    GPIO_PA1
 #define GPIO_SWITCH2    GPIO_PD7
 
+#define LED2_ON         0
+#define GPIO_ONEWIRE1   0
+#define LED2_OFF		0
 
 
 //#define KB_LINE_HIGH_VALID BUTTON_ON
