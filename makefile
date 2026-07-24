@@ -135,13 +135,14 @@ SIZEDUMMY := sizedummy
 all: pre-build main-build
 
 # Main-build Target
-main-build: $(ELF_FILE) secondary-outputs
+main-build: clean-project $(ELF_FILE) secondary-outputs
 
 OBJ_LIST := $(OBJS) $(USER_OBJS)
 # Tool invocations
 $(ELF_FILE): $(OBJ_LIST)
 	@echo 'Building Standard target: $@'
-	@$(TC32_PATH)tc32-elf-ld $(LNK_FLAGS) $(LS_INCLUDE) -T$(LS_FLAGS) -o $(ELF_FILE) $(OBJ_LIST) $(LIBS)
+
+	@$(TC32_PATH)tc32-elf-ld --gc-sections -L $(SDK_PATH)/zigbee/lib/tc32 -L $(SDK_PATH)/platform/lib -L $(SDK_PATH)/platform/tc32 -T $(LS_FLAGS) -o "$(ELF_FILE)" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
