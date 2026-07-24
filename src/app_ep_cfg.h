@@ -292,11 +292,11 @@ typedef struct {
 extern zcl_temperatureAttr_t g_zcl_temperatureAttrs;
 
 extern uint8_t APP_CB_CLUSTER_NUM1;
-//extern uint8_t APP_CB_CLUSTER_NUM2;
+extern uint8_t APP_CB_CLUSTER_NUM2;
 extern const zcl_specClusterInfo_t  g_appClusterList1[];
-//extern const zcl_specClusterInfo_t  g_appClusterList2[];
+extern const zcl_specClusterInfo_t  g_appClusterList2[];
 extern const af_simple_descriptor_t app_ep1_simpleDesc;
-//extern const af_simple_descriptor_t app_ep2_simpleDesc;
+extern const af_simple_descriptor_t app_ep2_simpleDesc;
 
 /* Attributes */
 //extern zcl_basicAttr_t              g_zcl_basicAttrs;
