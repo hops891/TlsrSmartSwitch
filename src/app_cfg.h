@@ -135,171 +135,35 @@ extern "C" {
 
 #define ZCL_BASIC_MFG_NAME     {11,'T','e','l','i','n','k','-','p','v','v','x'}
 
-#if USE_BL0937
-#define _MODEL_EM	'8'
-#elif USE_BL0942
-#define _MODEL_EM	'1'
-#else
 #define _MODEL_EM	'0'
-#endif
 
-#if USE_SWITCH
 #define _MODEL_SW	'2'
-#else
-#define _MODEL_SW	'1'
-#endif
 
-#if USE_SENSOR_MY18B20
- #if USE_THERMOSTAT
-	#define ZCL_BASIC_MODEL_ID     {10,'E','M',_MODEL_EM,'S','W',_MODEL_SW,'T','S','_','z'}
- #else
-	#define ZCL_BASIC_MODEL_ID     {9,'E','M',_MODEL_EM,'S','W',_MODEL_SW,'T','_','z'}
- #endif
-#else
 #define ZCL_BASIC_MODEL_ID     {8,'E','M',_MODEL_EM,'S','W',_MODEL_SW,'_','z'}
-#endif
 
 /*** Configure GPIOS for my device ***/
-
-#ifdef MY_DEVICE
-
-/*** Configure GPIOS for my device BL0937 ***/
-#if USE_BL0937
-
-#define BUTTON_ON		0
-#define GPIO_BUTTON     GPIO_PD7
-
-#define LED1_ON         0
-#define GPIO_LED1       GPIO_PB1
-#define LED2_ON         0
-#define GPIO_LED2       GPIO_PB2
-
-#define RELAY_ON        1
-#define GPIO_RELAY1     GPIO_PD2
-
-#define GPIO_SWITCH_ON  0
-#define GPIO_SWITCH1    GPIO_PA1
-
-#define GPIO_ONEWIRE1   GPIO_PA1
-
-#define GPIO_CF         GPIO_PB4
-#define GPIO_CF1        GPIO_PB5
-#define GPIO_SEL        GPIO_PD3
-
-#define BL0937_CURRENT_REF        (191547) 		// x1000: 0..65.535A (divisor = 1000 - > A)
-#define BL0937_VOLTAGE_REF        (208773)  	// x100: 0..655.35V (divisor = 100 - > V)
-#define BL0937_POWER_REF          (1161624) 	// x100 0..327.67W, x10: 327.67..3276.7W (divisor = 10, 100 - > W)
-#define BL0937_ENERGY_REF         ((BL0937_POWER_REF + 225)/450) //(=2403) x100 Wh (divisor = 100000 - > kWh)
-
-
-/*** Configure GPIOS for my device BL0942 ***/
-#elif	USE_BL0942
-
-#define BUTTON_ON		0
-#define GPIO_BUTTON     GPIO_PB5
-
-#define LED1_ON         0
-#define GPIO_LED1       GPIO_PB4
-#define LED2_ON         0
-#define GPIO_LED2       0
-
-#define RELAY_ON        1
-#define GPIO_RELAY1     GPIO_PC2
-
-#define GPIO_SWITCH_ON 	0
-#define GPIO_SWITCH1    GPIO_PD2
-
-#define GPIO_ONEWIRE1   GPIO_PD2
-
-#define GPIO_UART_TX    UART_TX_PB1
-#define GPIO_UART_RX    UART_RX_PB7
-
-#define BL0942_CURRENT_REF      16860520 // 2pow32/251.21346469622 // x1000: 0..65.535A
-#define BL0942_VOLTAGE_REF      26927694 // 2pow32/159.5 // x100: 0..655.35V
-// POWER_REF = (2pow32/VOLTAGE_REF)*(2pow32/CURRENT_REF)*353700/305978/73989 = 0.63478593422
-#define BL0942_POWER_REF        27060025 // 2pow24/0.620  // x1000: x1000: 0..327.67W, x100 32.767..327.67W, x10: 327.67..3276.7W
-// ENERGY_REF = ((2pow24/POWER_REF)*36000)/419430.4 = 0.053215
-#define BL0942_ENERGY_REF       315272310 // 2pow24/0.053215 // x100000
-#define BL0942_FREQ_REF         100000000 // (measured: 100175000) x100
-
-#endif // USE_BL0942
-
-#else // MY_DEVICE
-
-/*** Configure GPIOS for device BL0937 ***/
-
-#if	USE_BL0937
-
-#define BUTTON_ON		0
-#define GPIO_BUTTON     GPIO_PD7
-
-#define LED1_ON         0
-#define GPIO_LED1       GPIO_PB1
-#define LED2_ON         0
-#define GPIO_LED2       0
-
-#define RELAY_ON        1
-#define GPIO_RELAY1     GPIO_PD2
-
-#define GPIO_SWITCH_ON  0
-#define GPIO_SWITCH1    GPIO_PA1
-
-#define GPIO_ONEWIRE1   GPIO_PA1
-
-#define GPIO_CF         GPIO_PB4
-#define GPIO_CF1        GPIO_PB5
-#define GPIO_SEL        GPIO_PD3
-
-/*** Configure GPIOS for device BL0942 ***/
-
-#elif USE_BL0942
-
-#define BUTTON_ON		0
-#define GPIO_BUTTON     GPIO_PB5
-
-#define LED1_ON         0
-#define GPIO_LED1       GPIO_PB4
-#define LED2_ON         0
-#define GPIO_LED2       0
-
-#define RELAY_ON        1
-#define GPIO_RELAY1     GPIO_PC3
-
-#define GPIO_SWITCH_ON 	0
-#define GPIO_SWITCH1    GPIO_PD2
-
-#define GPIO_ONEWIRE1   GPIO_PD2
-
-#define GPIO_UART_TX    UART_TX_PB1
-#define GPIO_UART_RX    UART_RX_PB7
-
 /*** Configure GPIOS for device ns  ***/
-#else
 
-#define BUTTON_ON		0
-#define GPIO_BUTTON     GPIO_PB1
+#define BUTTON_ON		1
+#define GPIO_BUTTON     GPIO_PD3
 
-#define LED1_ON         0
-#define GPIO_LED1       GPIO_PB4
-#define LED2_ON         0
-#define GPIO_LED2       0
+#define LED1_ON         1
+#define GPIO_LED1       GPIO_PD4
 
 #define RELAY_ON        1
-#define GPIO_RELAY1     GPIO_PD3
+#define GPIO_RELAY1     GPIO_PB5
+#define GPIO_RELAY2     GPIO_PB6
 
-#define GPIO_SWITCH_ON  0
-#define GPIO_SWITCH1    GPIO_PD2
+#define GPIO_SWITCH_ON  1
+#define GPIO_SWITCH1    GPIO_PA1
+#define GPIO_SWITCH2    GPIO_PD7
 
-#define GPIO_ONEWIRE1   GPIO_PD2
 
-#endif
-
-#endif // MY_DEVICE
 
 //#define KB_LINE_HIGH_VALID BUTTON_ON
 #define BUTTON_OFF 		(!BUTTON_ON)
 #define LED1_OFF        (!LED1_ON)
-#define LED2_OFF        (!LED2_ON)
+
 #define RELAY_OFF   	(!RELAY_ON)
 #define GPIO_SWITCH_OFF	(!GPIO_SWITCH_ON)
 
@@ -320,7 +184,7 @@ enum {
     VK_SW3
 };
 
-#define MAX_BUTTON_NUM  2
+#define MAX_BUTTON_NUM  3
 
 /**********************************************************************
  * Battery & RF Power
@@ -370,7 +234,7 @@ typedef enum{
 #define USE_CALIBRATE_CVP	USE_METERING // Calibrate current, voltage, power
 
 /* BDB */
-#define TOUCHLINK_SUPPORT               ON
+#define TOUCHLINK_SUPPORT               OFF
 #define FIND_AND_BIND_SUPPORT           OFF
 
 #define ZCL_ON_OFF_SUPPORT              ON
@@ -382,7 +246,7 @@ typedef enum{
 #define ZCL_GROUP_SUPPORT                           ON
 #define ZCL_SCENE_SUPPORT                           OFF
 #define ZCL_ON_OFF_SWITCH_CFG_SUPPORT               USE_SWITCH
-#define ZCL_OTA_SUPPORT                             ON
+#define ZCL_OTA_SUPPORT                             OFF
 #define ZCL_GP_SUPPORT                              ON
 #define ZCL_METERING_SUPPORT                        USE_METERING
 #define ZCL_ELECTRICAL_MEASUREMENT_SUPPORT          USE_METERING
