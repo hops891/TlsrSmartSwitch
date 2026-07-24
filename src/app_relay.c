@@ -17,10 +17,11 @@ const ext_tab_gpios_t  tab_gpios = {
 	.gpios = {
 		.flg = LED1_ON | (LED2_ON<<1) | (BUTTON_ON<<2) | (GPIO_SWITCH_ON<<3),
 		.rl = GPIO_RELAY1,
+		.r2 = GPIO_RELAY2,
 		.led1 = GPIO_LED1,
-		.led2 = GPIO_LED2,
 		.key = GPIO_BUTTON,
 		.sw1 = GPIO_SWITCH1,
+		.sw2 = GPIO_SWITCH2,
 		.swire = GPIO_ONEWIRE1,
 #if USE_BL0937
 		.sel = GPIO_SEL,
