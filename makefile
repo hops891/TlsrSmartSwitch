@@ -41,13 +41,10 @@ OUT_DIR :=
 COMPILEOS = $(shell uname -o)
 LINUX_OS = GNU/Linux
 
-ifeq ($(COMPILEOS),$(LINUX_OS))
-	CUR_OS := linux
-	TOOLS_PATH := $(TEL_PATH)/tools/linux
-else
-	CUR_OS := windows
-	TOOLS_PATH := $(TEL_PATH)/tools/windows
-endif
+
+CUR_OS := linux
+TOOLS_PATH := $(TEL_PATH)/tools/linux
+
 TC32_PATH := $(TOOLS_PATH)/tc32/bin/
 
 LNK_FLAGS := --gc-sections -nostartfiles
