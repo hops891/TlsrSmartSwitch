@@ -122,6 +122,20 @@ LS_INCLUDE := -L$(SDK_PATH)/platform/lib -L$(SDK_PATH)/platform/tc32 -L$(SDK_PAT
 -include $(MAKE_PATH)/gp.mk
 -include $(MAKE_PATH)/zbhci.mk
 
+-include $(MAKE_PATH)/zdo.mk
+-include $(MAKE_PATH)/zcl.mk
+-include $(MAKE_PATH)/wwah.mk
+-include $(MAKE_PATH)/ss.mk
+-include $(MAKE_PATH)/ota.mk
+-include $(MAKE_PATH)/mac.mk
+
+-include $(MAKE_PATH)/common.mk
+-include $(MAKE_PATH)/bdb.mk
+-include $(MAKE_PATH)/aps.mk
+-include $(MAKE_PATH)/af.mk
+-include $(MAKE_PATH)/zbhci.mk
+-include $(MAKE_PATH)/div_mod.mk
+-include ./project.mk
 
 # Add inputs and outputs from these tool invocations to the build variables
 LST_FILE := $(OUT_PATH)/$(PROJECT_NAME).lst
