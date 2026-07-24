@@ -11,9 +11,9 @@
 #ifndef ZCL_BASIC_SW_BUILD_ID
 
 #define ZCL_BASIC_SW_BUILD_ID   {9 \
-                                ,'0'+ USE_BL0942 + (USE_BL0937<<3) \
-                                ,'0'+ USE_SENSOR_MY18B20 \
-                                ,'0'+ USE_THERMOSTAT \
+                                ,'0' \
+                                ,'0' \
+                                ,'0' \
                                 ,'0'+ USE_SWITCH \
                                 ,'-' \
                                 ,'0'+(APP_RELEASE>>4) \
