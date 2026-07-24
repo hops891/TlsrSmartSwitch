@@ -7,8 +7,6 @@
 #include "bdb.h"
 #include "ota.h"
 #include "gp.h"
-
-
 #include "app_relay.h"
 #include "app_onoff.h"
 #include "app_switch.h"
@@ -20,7 +18,6 @@
 #include "app_led.h"
 #include "app_utility.h"
 #include "app_sensor.h"
-
 
 typedef struct{
     uint8_t keyType; /* CERTIFICATION_KEY or MASTER_KEY key for touch-link or distribute network
@@ -61,9 +58,9 @@ void app_leaveIndHandler(nlme_leave_ind_t *pLeaveInd);
 void app_otaProcessMsgHandler(uint8_t evt, uint8_t status);
 bool app_nwkUpdateIndicateHandler(nwkCmd_nwkUpdate_t *pNwkUpdate);
 void app_zclProcessIncomingMsg(zclIncoming_t *pInHdlrMsg);
-void app_nwkStatusIndHandler(zdo_nwk_status_ind_t *pNwkStatusInd);
-void factory_reset_start(void *args);
 
+void factory_reset_start(void *args);
+void app_nwkStatusIndHandler(zdo_nwk_status_ind_t *pNwkStatusInd);
 //int32_t getTimeCb(void *arg);
 
 #endif /* SRC_INCLUDE_APP_MAIN_H_ */
