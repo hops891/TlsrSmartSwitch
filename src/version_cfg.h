@@ -42,86 +42,25 @@
 #endif
 
 /* Board ID */
-#define BOARD_EM0SW1		0 // key only
-#define BOARD_EM0SW2		1 // ext.switch
-#define BOARD_EM0SW1T		2 // MY18B20
-#define BOARD_EM0SW2T		3 // ext.switch, MY18B20
-#define BOARD_EM0SW1TS		6 // MY18B20, TERMOSTAT
-#define BOARD_EM0SW2TS		7 // ext.switch, MY18B20, TERMOSTAT
 
-#define BOARD_EM1SW1		8  // BL0942
-#define BOARD_EM1SW2		9  // BL0942, ext.switch
-#define BOARD_EM1SW1T		10 // BL0942, MY18B20
-#define BOARD_EM1SW2T		11 // BL0942, ext.switch, MY18B20
-#define BOARD_EM1SW1TS		14 // BL0942, MY18B20, TERMOSTAT
-#define BOARD_EM1SW2TS		15 // BL0942, ext.switch, MY18B20, TERMOSTAT
-                    
-#define BOARD_EM8SW1		16 // BL0937
-#define BOARD_EM8SW2		17 // BL0937, ext.switch
-#define BOARD_EM8SW1T		18 // BL0937, MY18B20
-#define BOARD_EM8SW2T		19 // BL0937, ext.switch, MY18B20
-#define BOARD_EM8SW1TS		22 // BL0937, MY18B20, TERMOSTAT
-#define BOARD_EM8SW2TS		23 // BL0937, ext.switch, MY18B20, TERMOSTAT
+#define BOARD_EM0SW2		1 // ext.switch
 
 
 
 /* Board define */
 #ifndef BOARD
-#define BOARD				BOARD_EM1SW1
+#define BOARD				BOARD_EM0SW2
 #endif
 
 // #define MY_DEVICE	1
-
-#if (BOARD & 16)
-#define USE_BL0937			1
-#define USE_BL0942			0
-#define USE_METERING		1
-#elif (BOARD & 8)
-#define USE_BL0937			0
-#define USE_BL0942			1
-#define USE_METERING		1
-#else
-#define USE_BL0937			0
-#define USE_BL0942			0
-#define USE_METERING		0
-#endif
-#if (BOARD & 1)
 #define USE_SWITCH			1
-#else
-#define USE_SWITCH			0
-#endif
-#if (BOARD & 2)
-#define USE_SENSOR_MY18B20	1
-#else
-#define USE_SENSOR_MY18B20	0
-#endif
-#if (BOARD & 4)
-#define USE_THERMOSTAT		1
-#else
-#define USE_THERMOSTAT		0
-#endif
 
 /* Chip IDs */
-#define TLSR_8267				0x00
-#define TLSR_8269				0x01
+
 #define TLSR_8258_512K			0x02
 #define TLSR_8258_1M			0x03
-#define TLSR_8278				0x04
-#define TLSR_B91				0x05
 
-#if defined(MCU_CORE_826x)
-	#if (CHIP_8269)
-		#define CHIP_TYPE		TLSR_8269
-	#else
-		#define CHIP_TYPE		TLSR_8267
-	#endif
-#elif defined(MCU_CORE_8258)
-		#define CHIP_TYPE		TLSR_8258_512K	//TLSR_8258_1M
-#elif defined(MCU_CORE_8278)
-		#define CHIP_TYPE		TLSR_8278
-#elif defined(MCU_CORE_B91)
-		#define CHIP_TYPE		TLSR_B91
-#endif
+#define CHIP_TYPE		TLSR_8258_512K	//TLSR_8258_1M
 
 #define APP_RELEASE				0x01	//0x12 -> BCD app release "1.2"
 #define APP_BUILD				0x02	//0x34 -> BCD app build "3.4"
