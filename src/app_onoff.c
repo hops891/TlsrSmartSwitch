@@ -15,11 +15,6 @@ void cmdOnOff_set(bool status) {
     		cfg_on_off_saved.onOff = cfg_on_off.onOff;
     	}
     }
-#if USE_THERMOSTAT // USE_SENSOR_MY18B20
-    set_therm_relay_status(status);
-#else
-	set_relay_status(status);
-#endif
 }
 
 void cmdOnOff_toggle(void) {
