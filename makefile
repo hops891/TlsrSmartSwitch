@@ -135,7 +135,7 @@ SIZEDUMMY := sizedummy
 all: pre-build main-build
 
 # Main-build Target
-main-build: clean-project $(ELF_FILE) secondary-outputs
+main-build: $(ELF_FILE) secondary-outputs
 
 OBJ_LIST := $(OBJS) $(USER_OBJS)
 # Tool invocations
