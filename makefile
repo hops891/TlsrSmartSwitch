@@ -80,55 +80,7 @@ ASM_FLAGS := \
 -fno-rtti \
 -fno-threadsafe-statics
 
-ifeq ($(USE_ZB),1)
 
-# MAKE_PATH: project all make
-
-TEL_CHIP +=-DUSE_BLE=1
-
-MAKE_PATH ?= ./make_zb
-
-SDK_PATH ?= $(SDK_bz_PATH)
-
-SDK_FLAGS := $(SDK_PATH)/stack/zigbee
-
-LS_FLAGS := $(SRC_PATH)/boot_bz.link
-
-LIBS := -lsoft-fp -lble_8258 -ldrivers_8258 -lzb_router 
-
-INCLUDE_PATHS := -I$(SRC_PATH) -I$(SRC_PATH)/includes -I$(SRC_PATH)/common  -I$(SRC_PATH)/custom_zcl\
--I$(SDK_PATH) \
--I$(SDK_PATH)/proj \
--I$(SDK_PATH)/proj/common \
--I$(SDK_PATH)/platform \
--I$(SDK_PATH)/platform/chip_8258 \
--I$(SDK_PATH)/stack/ble \
--I$(SDK_PATH)/stack/zigbee/af \
--I$(SDK_PATH)/stack/zigbee/include \
--I$(SDK_PATH)/stack/zigbee/bdb/includes \
--I$(SDK_PATH)/stack/zigbee/common/includes \
--I$(SDK_PATH)/stack/zigbee/ota \
--I$(SDK_PATH)/stack/zigbee/zbapi \
--I$(SDK_PATH)/stack/zigbee/zcl \
--I$(SDK_PATH)/stack/zigbee/zdo \
--I$(SDK_PATH)/zbhci \
--I$(SDK_PATH)/stack/ble \
--I$(SDK_PATH)/stack/ble/ble_8258
-
-GCC_FLAGS += $(TEL_CHIP)
-
-LS_INCLUDE := -L$(SDK_PATH)/platform/lib -L$(SDK_PATH)/stack/zigbee/lib/tc32 -L$(SDK_PATH)/stack/ble/lib -L$(OUT_PATH)
-
-
-#include Project makefile
--include $(MAKE_PATH)/src.mk
-#include SDK makefile
--include $(MAKE_PATH)/platform.mk
--include $(MAKE_PATH)/proj.mk
--include $(MAKE_PATH)/zigbee.mk
-#-include $(MAKE_PATH)/zbhci.mk
-
-else
 
 # MAKE_PATH: project all make
 
@@ -173,8 +125,6 @@ LS_INCLUDE := -L$(SDK_PATH)/platform/lib -L$(SDK_PATH)/platform/tc32 -L$(SDK_PAT
 -include $(MAKE_PATH)/zigbee.mk
 -include $(MAKE_PATH)/gp.mk
 #-include $(MAKE_PATH)/zbhci.mk
-
-endif
 
 
 # Add inputs and outputs from these tool invocations to the build variables
