@@ -54,7 +54,11 @@
 
 // #define MY_DEVICE	1
 #define USE_SWITCH			1
-
+#define USE_BL0942			0
+#define USE_BL0937			0
+#define USE_SENSOR_MY18B20	0
+#define USE_THERMOSTAT		0
+#define USE_METERING		0
 /* Chip IDs */
 
 #define TLSR_8258_512K			0x02
