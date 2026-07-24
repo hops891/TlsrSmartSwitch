@@ -10,20 +10,13 @@
 typedef struct {
     uint16_t		flg;	// LED1-2 inversion bits, ...
     GPIO_PinTypeDef rl;
+    GPIO_PinTypeDef r2;
     GPIO_PinTypeDef led1;
     GPIO_PinTypeDef led2;
     GPIO_PinTypeDef key;
     GPIO_PinTypeDef sw1;
+    GPIO_PinTypeDef sw2;
     GPIO_PinTypeDef swire;
-#if USE_BL0937
-    GPIO_PinTypeDef sel;
-    GPIO_PinTypeDef cf;
-    GPIO_PinTypeDef cf1;
-#endif
-#if USE_BL0942
-    GPIO_PinTypeDef rx;
-    GPIO_PinTypeDef tx;
-#endif
 } dev_gpios_t;
 
 extern dev_gpios_t dev_gpios;
@@ -35,9 +28,6 @@ void dev_gpios_init(void);
 
 bool get_relay_status(void);
 void set_relay_status(bool status);
-#if USE_THERMOSTAT // USE_SENSOR_MY18B20
-void set_therm_relay_status(bool status);
-#endif
 
 #if USE_CFG_GPIO
 dev_gpios_t  dev_gpios_new;
