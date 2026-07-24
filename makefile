@@ -16,7 +16,7 @@ SRC_PATH ?= $(PROJECT_PATH)$(SRC_DIR)
 TEL_PATH ?= .
 # SDK_PATH: X:/Telink/tl_zigbee_sdk
 
-SDK_z_PATH ?= ./SDK_z
+SDK_z_PATH ?= ./SDK_z/tl_zigbee_sdk
 
 USE_ZB ?=0
 
