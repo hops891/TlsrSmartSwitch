@@ -17,7 +17,6 @@ TEL_PATH ?= .
 # SDK_PATH: X:/Telink/tl_zigbee_sdk
 
 SDK_z_PATH ?= ./SDK_z
-SDK_bz_PATH ?= ./SDK_bz
 
 USE_ZB ?=0
 
@@ -235,10 +234,7 @@ install: $(SDK_FLAGS) $(TC32_PATH)
 
 $(SDK_FLAGS): $(SDK_PATH)
 ifneq ($(SDK_FLAGS),$(wildcard $(SDK_FLAGS)))
-	@wget -P $(SDK_PATH) http://wiki.telink-semi.cn/tools_and_sdk/Zigbee/Zigbee_SDK.zip
-	@unzip -o $(SDK_PATH)/Zigbee_SDK.zip -d $(SDK_z_PATH)
-	#@unzip -o $(TEL_PATH)/tools/SDK_z.zip -d $(SDK_z_PATH)
-	#@unzip -o $(TEL_PATH)/tools/SDK_bz.zip -d $(SDK_bz_PATH)
+	@unzip -o $(TEL_PATH)/tools/SDK_z.zip -d $(SDK_z_PATH)
 endif
 
 $(SDK_PATH):
@@ -246,13 +242,7 @@ $(SDK_PATH):
 
 $(TC32_PATH): $(TOOLS_PATH)
 ifneq ($(TC32_PATH),$(wildcard $(TC32_PATH)))
-ifeq (linux,$(CUR_OS))
-	#@wget -P $(TOOLS_PATH) http://shyboy.oss-cn-shenzhen.aliyuncs.com/readonly/tc32_gcc_v2.0.tar.bz2 
 	@tar -xvjf $(TOOLS_PATH)/tc32_gcc_v2.0.tar.bz2 -C $(TOOLS_PATH)
-else
-	@unzip -o $(TOOLS_PATH)/tc32.zip -d $(TOOLS_PATH)
-	@echo Use "Telink IoT Studio"! - http://wiki.telink-semi.cn/wiki/IDE-and-Tools/Telink_IoT_Studio/
-endif
 endif
 
 $(TOOLS_PATH):
