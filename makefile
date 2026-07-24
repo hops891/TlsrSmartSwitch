@@ -1,5 +1,4 @@
-
-PROJECT_NAME ?= switch44
+PROJECT_NAME ?= test
 VERSION_BIN ?=
 
 TEL_CHIP := $(POJECT_DEF) -DMCU_CORE_8258=1 -DROUTER=1 -DMCU_STARTUP_8258=1
@@ -17,6 +16,7 @@ TEL_PATH ?= .
 # SDK_PATH: X:/Telink/tl_zigbee_sdk
 
 SDK_z_PATH ?= ./SDK_z
+SDK_bz_PATH ?= ./SDK_bz
 
 USE_ZB ?=0
 
@@ -41,10 +41,13 @@ OUT_DIR :=
 COMPILEOS = $(shell uname -o)
 LINUX_OS = GNU/Linux
 
-
-CUR_OS := linux
-TOOLS_PATH := $(TEL_PATH)/tools/linux
-
+ifeq ($(COMPILEOS),$(LINUX_OS))
+	CUR_OS := linux
+	TOOLS_PATH := $(TEL_PATH)/tools/linux
+else
+	CUR_OS := windows
+	TOOLS_PATH := $(TEL_PATH)/tools/windows
+endif
 TC32_PATH := $(TOOLS_PATH)/tc32/bin/
 
 LNK_FLAGS := --gc-sections -nostartfiles
@@ -76,7 +79,55 @@ ASM_FLAGS := \
 -fno-rtti \
 -fno-threadsafe-statics
 
+ifeq ($(USE_ZB),1)
 
+# MAKE_PATH: project all make
+
+TEL_CHIP +=-DUSE_BLE=1
+
+MAKE_PATH ?= ./make_zb
+
+SDK_PATH ?= $(SDK_bz_PATH)
+
+SDK_FLAGS := $(SDK_PATH)/stack/zigbee
+
+LS_FLAGS := $(SRC_PATH)/boot_bz.link
+
+LIBS := -lsoft-fp -lble_8258 -ldrivers_8258 -lzb_router 
+
+INCLUDE_PATHS := -I$(SRC_PATH) -I$(SRC_PATH)/includes -I$(SRC_PATH)/common  -I$(SRC_PATH)/custom_zcl\
+-I$(SDK_PATH) \
+-I$(SDK_PATH)/proj \
+-I$(SDK_PATH)/proj/common \
+-I$(SDK_PATH)/platform \
+-I$(SDK_PATH)/platform/chip_8258 \
+-I$(SDK_PATH)/stack/ble \
+-I$(SDK_PATH)/stack/zigbee/af \
+-I$(SDK_PATH)/stack/zigbee/include \
+-I$(SDK_PATH)/stack/zigbee/bdb/includes \
+-I$(SDK_PATH)/stack/zigbee/common/includes \
+-I$(SDK_PATH)/stack/zigbee/ota \
+-I$(SDK_PATH)/stack/zigbee/zbapi \
+-I$(SDK_PATH)/stack/zigbee/zcl \
+-I$(SDK_PATH)/stack/zigbee/zdo \
+-I$(SDK_PATH)/zbhci \
+-I$(SDK_PATH)/stack/ble \
+-I$(SDK_PATH)/stack/ble/ble_8258
+
+GCC_FLAGS += $(TEL_CHIP)
+
+LS_INCLUDE := -L$(SDK_PATH)/platform/lib -L$(SDK_PATH)/stack/zigbee/lib/tc32 -L$(SDK_PATH)/stack/ble/lib -L$(OUT_PATH)
+
+
+#include Project makefile
+-include $(MAKE_PATH)/src.mk
+#include SDK makefile
+-include $(MAKE_PATH)/platform.mk
+-include $(MAKE_PATH)/proj.mk
+-include $(MAKE_PATH)/zigbee.mk
+#-include $(MAKE_PATH)/zbhci.mk
+
+else
 
 # MAKE_PATH: project all make
 
@@ -120,22 +171,10 @@ LS_INCLUDE := -L$(SDK_PATH)/platform/lib -L$(SDK_PATH)/platform/tc32 -L$(SDK_PAT
 -include $(MAKE_PATH)/proj.mk
 -include $(MAKE_PATH)/zigbee.mk
 -include $(MAKE_PATH)/gp.mk
--include $(MAKE_PATH)/zbhci.mk
+#-include $(MAKE_PATH)/zbhci.mk
 
--include $(MAKE_PATH)/zdo.mk
--include $(MAKE_PATH)/zcl.mk
--include $(MAKE_PATH)/wwah.mk
--include $(MAKE_PATH)/ss.mk
--include $(MAKE_PATH)/ota.mk
--include $(MAKE_PATH)/mac.mk
+endif
 
--include $(MAKE_PATH)/common.mk
--include $(MAKE_PATH)/bdb.mk
--include $(MAKE_PATH)/aps.mk
--include $(MAKE_PATH)/af.mk
--include $(MAKE_PATH)/zbhci.mk
--include $(MAKE_PATH)/div_mod.mk
--include ./project.mk
 
 # Add inputs and outputs from these tool invocations to the build variables
 LST_FILE := $(OUT_PATH)/$(PROJECT_NAME).lst
@@ -155,8 +194,7 @@ OBJ_LIST := $(OBJS) $(USER_OBJS)
 # Tool invocations
 $(ELF_FILE): $(OBJ_LIST)
 	@echo 'Building Standard target: $@'
-
-	@$(TC32_PATH)tc32-elf-ld --gc-sections -L $(SDK_PATH)/zigbee/lib/tc32 -L $(SDK_PATH)/platform/lib -L $(SDK_PATH)/platform/tc32 -T $(LS_FLAGS) -o "$(ELF_FILE)" $(OBJS) $(USER_OBJS) $(LIBS)
+	@$(TC32_PATH)tc32-elf-ld $(LNK_FLAGS) $(LS_INCLUDE) -T$(LS_FLAGS) -o $(ELF_FILE) $(OBJ_LIST) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -246,7 +284,9 @@ install: $(SDK_FLAGS) $(TC32_PATH)
 
 $(SDK_FLAGS): $(SDK_PATH)
 ifneq ($(SDK_FLAGS),$(wildcard $(SDK_FLAGS)))
+	#@wget -P $(SDK_PATH) http://wiki.telink-semi.cn/tools_and_sdk/Zigbee/Zigbee_SDK.zip
 	@unzip -o $(TEL_PATH)/tools/SDK_z.zip -d $(SDK_z_PATH)
+	@unzip -o $(TEL_PATH)/tools/SDK_bz.zip -d $(SDK_bz_PATH)
 endif
 
 $(SDK_PATH):
@@ -254,7 +294,13 @@ $(SDK_PATH):
 
 $(TC32_PATH): $(TOOLS_PATH)
 ifneq ($(TC32_PATH),$(wildcard $(TC32_PATH)))
+ifeq (linux,$(CUR_OS))
+	#@wget -P $(TOOLS_PATH) http://shyboy.oss-cn-shenzhen.aliyuncs.com/readonly/tc32_gcc_v2.0.tar.bz2 
 	@tar -xvjf $(TOOLS_PATH)/tc32_gcc_v2.0.tar.bz2 -C $(TOOLS_PATH)
+else
+	@unzip -o $(TOOLS_PATH)/tc32.zip -d $(TOOLS_PATH)
+	@echo Use "Telink IoT Studio"! - http://wiki.telink-semi.cn/wiki/IDE-and-Tools/Telink_IoT_Studio/
+endif
 endif
 
 $(TOOLS_PATH):
