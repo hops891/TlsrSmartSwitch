@@ -162,15 +162,12 @@ void buttonInit(void) {
     app_button[0].gpio_on = (dev_gpios.flg & GPIOS_FLG_KEY_ON) != 0;
 #if USE_SWITCH
 	if(dev_gpios.sw1) {
-#if USE_SENSOR_MY18B20
-		if(dev_gpios.sw1 != dev_gpios.swire) {
-			app_button[1].gpio_name = dev_gpios.sw1;
-			app_button[1].gpio_on = (dev_gpios.flg & GPIOS_FLG_BTN_ON) != 0;
-		}
-#else
 		app_button[1].gpio_name = dev_gpios.sw1;
 		app_button[1].gpio_on = (dev_gpios.flg & GPIOS_FLG_BTN_ON) != 0;
-#endif
+	}
+	if(dev_gpios.sw2) {
+		app_button[2].gpio_name = dev_gpios.sw2;
+		app_button[2].gpio_on = (dev_gpios.flg & GPIOS_FLG_BTN_ON) != 0;
 	}
 #endif
 // типовой buttonInit()
